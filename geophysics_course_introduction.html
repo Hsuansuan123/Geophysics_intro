@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地球物理通論 | General Geophysics 課程介紹</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700;900&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'water-blue': '#5B8DEF',
+                        'water-teal': '#73C8A9',
+                        'water-lavender': '#A890E6',
+                        'water-sand': '#E8A87C',
+                        'water-coral': '#F38181',
+                        'paper-bg': '#FAF8F5',
+                        'ink-dark': '#2D3748',
+                        'ink-muted': '#5A6578'
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['"Zen Maru Gothic"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* CSS Paper Texture & Organic Watercolor Elements */
+        body {
+            background-color: #FAF8F5;
+            background-image: radial-gradient(#E8E2D5 0.75px, transparent 0.75px), radial-gradient(#E8E2D5 0.75px, #FAF8F5 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            color: #2D3748;
+            font-family: 'Zen Maru Gothic', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Organic Watercolor Splashes */
+        .watercolor-blob-1 {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            background: linear-gradient(135deg, rgba(91, 141, 239, 0.25) 0%, rgba(115, 200, 169, 0.2) 100%);
+            filter: blur(25px);
+        }
+
+        .watercolor-blob-2 {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            background: linear-gradient(135deg, rgba(168, 144, 230, 0.25) 0%, rgba(243, 129, 129, 0.2) 100%);
+            filter: blur(30px);
+        }
+
+        .watercolor-blob-3 {
+            border-radius: 50% 50% 30% 70% / 30% 60% 40% 70%;
+            background: linear-gradient(135deg, rgba(232, 168, 124, 0.25) 0%, rgba(115, 200, 169, 0.25) 100%);
+            filter: blur(20px);
+        }
+
+        /* Watercolor Card Style */
+        .watercolor-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px -5px rgba(168, 144, 230, 0.12), 0 4px 12px rgba(91, 141, 239, 0.08);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .watercolor-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 20px 35px -10px rgba(91, 141, 239, 0.2), 0 8px 18px rgba(115, 200, 169, 0.15);
+        }
+
+        /* Brush Underline Effect */
+        .brush-underline {
+            position: relative;
+            display: inline-block;
+        }
+
+        .brush-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: -5%;
+            width: 110%;
+            height: 12px;
+            background: rgba(115, 200, 169, 0.35);
+            border-radius: 8px;
+            z-index: -1;
+            transform: rotate(-1deg);
+        }
+
+        .brush-underline-coral::after {
+            background: rgba(243, 129, 129, 0.35);
+            transform: rotate(1deg);
+        }
+
+        .brush-underline-lavender::after {
+            background: rgba(168, 144, 230, 0.35);
+            transform: rotate(-0.5deg);
+        }
+
+        /* Custom Tabs */
+        .tab-btn.active {
+            background: #5B8DEF;
+            color: white;
+            box-shadow: 0 4px 15px rgba(91, 141, 239, 0.35);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF8F5;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A890E6;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5B8DEF;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative text-ink-dark">
+
+    <div class="fixed top-[-100px] left-[-100px] w-[500px] h-[500px] watercolor-blob-1 pointer-events-none z-0"></div>
+    <div class="fixed top-[30%] right-[-150px] w-[600px] h-[600px] watercolor-blob-2 pointer-events-none z-0"></div>
+    <div class="fixed bottom-[-100px] left-[20%] w-[550px] h-[550px] watercolor-blob-3 pointer-events-none z-0"></div>
+
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-paper-bg/80 border-b border-water-lavender/20 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-water-blue to-water-teal flex items-center justify-center text-white font-serif font-bold text-xl shadow-md">
+                    地
+                </div>
+                <span class="font-serif font-bold text-xl text-ink-dark tracking-wide">地球物理通論</span>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium text-ink-muted">
+                <a href="#about" class="hover:text-water-blue transition-colors">課程理念</a>
+                <a href="#cer" class="hover:text-water-blue transition-colors">CER探究模型</a>
+                <a href="#schedule" class="hover:text-water-blue transition-colors">導覽流程</a>
+                <a href="#curriculum" class="hover:text-water-blue transition-colors">核心主題</a>
+                <a href="#clil" class="hover:text-water-blue transition-colors">CLIL句型庫</a>
+                <a href="#ai-rules" class="hover:text-water-blue transition-colors">AI協同原則</a>
+                <a href="#exit-ticket" class="hover:text-water-blue transition-colors">Exit Ticket</a>
+            </div>
+            <a href="#exit-ticket" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-water-blue to-water-teal text-white font-medium shadow-md hover:shadow-lg transition-all text-sm">
+                第一堂課簽到
+            </a>
+        </div>
+    </nav>
+
+    <main class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-12">
+
+        <section id="hero" class="text-center space-y-8 pt-8">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-water-lavender/40 shadow-sm text-sm font-medium text-water-lavender mb-2">
+                <i class="fa-solid font-sparkles text-water-sand"></i> 地生系二年級 · CLIL 雙語教學 · AI 協同探究
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl font-black font-serif text-ink-dark tracking-tight leading-tight">
+                地球物理通論<br>
+                <span class="text-2xl sm:text-4xl font-normal font-sans text-water-blue mt-3 block">
+                    General Geophysics
+                </span>
+            </h1>
+
+            <p class="max-w-3xl mx-auto text-lg sm:text-xl text-ink-muted font-medium leading-relaxed">
+                <span class="brush-underline">用地球物理認識地球</span> · 
+                <span class="brush-underline brush-underline-lavender">用英文接觸科學</span><br>
+                <span class="brush-underline brush-underline-coral">用 AI 協助探究</span> · 
+                <span>用思考理解世界</span>
+            </p>
+
+            <!-- Instructor Badge -->
+            <div class="inline-flex items-center gap-4 p-3 pr-6 rounded-full bg-white/90 border border-water-teal/30 shadow-md">
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-water-teal to-water-blue flex items-center justify-center text-white text-xl">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <div class="text-left">
+                    <div class="text-xs text-ink-muted">授課教師 Instructor</div>
+                    <div class="font-bold font-serif text-ink-dark">陳達毅 老師 (Dr. Dayi Chen)</div>
+                </div>
+            </div>
+
+            <!-- Quick Info Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto pt-6">
+                <div class="p-4 rounded-2xl bg-white/70 border border-water-blue/20 text-center shadow-sm">
+                    <div class="text-water-blue text-2xl mb-1"><i class="fa-solid fa-earth-americas"></i></div>
+                    <div class="font-bold text-sm">Geophysics</div>
+                    <div class="text-xs text-ink-muted">地球物理學科</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-white/70 border border-water-teal/20 text-center shadow-sm">
+                    <div class="text-water-teal text-2xl mb-1"><i class="fa-solid fa-language"></i></div>
+                    <div class="font-bold text-sm">CLIL Bilingual</div>
+                    <div class="text-xs text-ink-muted">雙語學科融入</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-white/70 border border-water-lavender/20 text-center shadow-sm">
+                    <div class="text-water-lavender text-2xl mb-1"><i class="fa-solid fa-robot"></i></div>
+                    <div class="font-bold text-sm">AI Agent</div>
+                    <div class="text-xs text-ink-muted">智慧協同工具</div>
+                </div>
+                <div class="p-4 rounded-2xl bg-white/70 border border-water-sand/20 text-center shadow-sm">
+                    <div class="text-water-sand text-2xl mb-1"><i class="fa-solid fa-code-branch"></i></div>
+                    <div class="font-bold text-sm">Digital Workflow</div>
+                    <div class="text-xs text-ink-muted">GitHub/Colab歷程</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="watercolor-card p-8 sm:p-12 relative overflow-hidden">
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="flex items-center gap-3">
+                    <span class="w-3 h-8 rounded-full bg-water-coral"></span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-ink-dark">課程核心理念 Core Idea</h2>
+                </div>
+
+                <div class="bg-gradient-to-r from-water-blue/10 via-water-teal/10 to-transparent p-6 rounded-2xl border-l-4 border-water-blue space-y-3">
+                    <p class="text-lg sm:text-xl font-medium text-ink-dark leading-relaxed">
+                        「我們不是要學英文，而是用英文來學習新的學科知識；我們不只學地球物理、AI 與數位科技，也學習如何進行科學思考。」
+                    </p>
+                    <p class="text-sm text-ink-muted italic font-sans">
+                        "We are not learning English for its own sake. We use English to learn new scientific knowledge. We will learn not only geophysics, AI, and digital technology, but also how to think scientifically."
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 pt-4">
+                    <div class="space-y-2 p-5 rounded-xl bg-white/60 border border-water-blue/20">
+                        <div class="text-water-blue font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb"></i> 不只是記憶知識
+                        </div>
+                        <p class="text-sm text-ink-muted">科學不只是給答案，而是問：你為什麼這樣認為？你的證據是什麼？</p>
+                    </div>
+                    <div class="space-y-2 p-5 rounded-xl bg-white/60 border border-water-teal/20">
+                        <div class="text-water-teal font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-comments"></i> 雙語科學表達
+                        </div>
+                        <p class="text-sm text-ink-muted">逐漸熟悉科學家如何用英文描述現象、提出問題、表達證據與解釋想法。</p>
+                    </div>
+                    <div class="space-y-2 p-5 rounded-xl bg-white/60 border border-water-lavender/20">
+                        <div class="text-water-lavender font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-arrows-spin"></i> 動態科學模型
+                        </div>
+                        <p class="text-sm text-ink-muted">觀察現象 → 提出主張 → 尋找證據 → 建立推理 → 驗證與修正模型。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cer" class="space-y-8">
+            <div class="text-center space-y-3">
+                <div class="inline-block px-3 py-1 rounded-full bg-water-lavender/20 text-water-lavender font-semibold text-xs tracking-wider uppercase">Scientific Inquiry Framework</div>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold">CER 科學探究思考架構</h2>
+                <p class="text-ink-muted max-w-2xl mx-auto">一種有意識的科學思考方式：從觀察現象到提出合理論證</p>
+            </div>
+
+            <!-- CER Explanation Cards -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Claim -->
+                <div class="watercolor-card p-6 space-y-4 border-t-4 border-t-water-coral">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold px-3 py-1 rounded-full bg-water-coral/20 text-water-coral">C - Claim</span>
+                        <i class="fa-solid fa-flag text-water-coral text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-serif">Claim (主張)</h3>
+                    <p class="text-sm text-ink-dark font-medium">「我認為事情是怎樣的？」</p>
+                    <p class="text-xs text-ink-muted leading-relaxed">對問題所提出的陳述或結論。這是一個可被驗證或討論的想法。</p>
+                    <div class="p-3 bg-water-coral/10 rounded-xl text-xs text-ink-dark">
+                        <span class="font-bold">範例：</span>「台灣周圍的地震活動主要與板塊邊界交互作用有關。」
+                    </div>
+                </div>
+
+                <!-- Evidence -->
+                <div class="watercolor-card p-6 space-y-4 border-t-4 border-t-water-teal">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold px-3 py-1 rounded-full bg-water-teal/20 text-water-teal">E - Evidence</span>
+                        <i class="fa-solid fa-magnifying-glass text-water-teal text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-serif">Evidence (證據)</h3>
+                    <p class="text-sm text-ink-dark font-medium">「我有哪些觀察、資料或數據？」</p>
+                    <p class="text-xs text-ink-muted leading-relaxed">支持主張的科學數據、觀測現象或圖表分析。必須是具體客觀的。</p>
+                    <div class="p-3 bg-water-teal/10 rounded-xl text-xs text-ink-dark">
+                        <span class="font-bold">範例：</span>「全球與台灣地震分布圖顯示地震集中在特定帶狀區域，而非均勻散布。」
+                    </div>
+                </div>
+
+                <!-- Reasoning -->
+                <div class="watercolor-card p-6 space-y-4 border-t-4 border-t-water-blue">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold px-3 py-1 rounded-full bg-water-blue/20 text-water-blue">R - Reasoning</span>
+                        <i class="fa-solid fa-brain text-water-blue text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-serif">Reasoning (推理)</h3>
+                    <p class="text-sm text-ink-dark font-medium">「為什麼這些證據可以支持主張？」</p>
+                    <p class="text-xs text-ink-muted leading-relaxed">利用科學原理解釋證據與主張之間的邏輯連結。</p>
+                    <div class="p-3 bg-water-blue/10 rounded-xl text-xs text-ink-dark">
+                        <span class="font-bold">範例：</span>「當板塊相互錯動或碰撞時，累積的應力釋放會產生地震，因此帶狀分布反映板塊邊界。」
+                    </div>
+                </div>
+            </div>
+
+            <!-- CER Simulator Interactive Tool -->
+            <div class="watercolor-card p-8 rounded-3xl space-y-6">
+                <div class="flex items-center justify-between border-b border-water-lavender/20 pb-4">
+                    <div>
+                        <h3 class="text-xl font-serif font-bold text-ink-dark">💡 CER 地球物理探究模擬體驗</h3>
+                        <p class="text-xs text-ink-muted">選擇探究情境，體驗科學家的思考流程：</p>
+                    </div>
+                    <span id="cer-step-indicator" class="px-3 py-1 bg-water-blue text-white rounded-full text-xs font-bold">Step 1 / 3</span>
+                </div>
+
+                <!-- Question Prompt -->
+                <div class="p-4 bg-paper-bg rounded-xl border border-water-sand/30">
+                    <div class="text-xs text-water-sand font-bold mb-1">探究核心問題 Investigative Question:</div>
+                    <div id="cer-question" class="text-lg font-serif font-bold text-ink-dark">為什麼台灣附近經常發生地震？(Why do earthquakes occur frequently around Taiwan?)</div>
+                </div>
+
+                <!-- Interactive Steps -->
+                <div id="cer-step-container" class="space-y-4">
+                    <!-- Dynamic Content Loaded by JS -->
+                </div>
+
+                <div class="flex justify-between items-center pt-4 border-t border-water-lavender/20">
+                    <button id="cer-prev-btn" onclick="prevCERStep()" class="px-4 py-2 rounded-full border border-ink-muted/30 text-sm font-medium text-ink-muted hover:bg-white disabled:opacity-40" disabled>
+                        <i class="fa-solid fa-arrow-left mr-1"></i> 上一步
+                    </button>
+                    <button id="cer-next-btn" onclick="nextCERStep()" class="px-6 py-2 rounded-full bg-water-blue text-white text-sm font-medium hover:bg-water-blue/90 shadow-md">
+                        下一步 <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="schedule" class="space-y-8">
+            <div class="text-center space-y-3">
+                <div class="inline-block px-3 py-1 rounded-full bg-water-teal/20 text-water-teal font-semibold text-xs tracking-wider uppercase">Orientation Roadmap</div>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold">三小時課程導覽流程</h2>
+                <p class="text-ink-muted max-w-2xl mx-auto">第一堂課完整時間分配與學習任務</p>
+            </div>
+
+            <!-- Schedule Tabs -->
+            <div class="flex justify-center gap-2 sm:gap-4 flex-wrap">
+                <button onclick="switchTab('part1')" id="tab-part1" class="tab-btn active px-6 py-3 rounded-full text-sm font-bold transition-all shadow-sm">
+                    PART 1 (09:00-09:50)<br><span class="text-xs font-normal">建立學習方式</span>
+                </button>
+                <button onclick="switchTab('part2')" id="tab-part2" class="tab-btn bg-white text-ink-muted px-6 py-3 rounded-full text-sm font-bold transition-all shadow-sm">
+                    PART 2 (10:00-10:50)<br><span class="text-xs font-normal">建立數位學習環境</span>
+                </button>
+                <button onclick="switchTab('part3')" id="tab-part3" class="tab-btn bg-white text-ink-muted px-6 py-3 rounded-full text-sm font-bold transition-all shadow-sm">
+                    PART 3 (11:00-12:00)<br><span class="text-xs font-normal">從工具回到科學</span>
+                </button>
+            </div>
+
+            <!-- Tab Content Display -->
+            <div id="tab-content-container" class="watercolor-card p-6 sm:p-10">
+                <!-- Dynamic Content Loaded by JS -->
+            </div>
+        </section>
+
+        <section id="curriculum" class="space-y-10">
+            <div class="text-center space-y-3">
+                <div class="inline-block px-3 py-1 rounded-full bg-water-sand/20 text-water-sand font-semibold text-xs tracking-wider uppercase">Subjects & Tools</div>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold">學習內容與數位工具箱</h2>
+                <p class="text-ink-muted max-w-2xl mx-auto">地球物理專業主題與科技工具雙軌並進</p>
+            </div>
+
+            <!-- Subject Grid -->
+            <div class="space-y-4">
+                <h3 class="text-xl font-serif font-bold text-ink-dark flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-water-blue"></i> 地球物理六大主題 (Geophysical Topics)
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="p-5 rounded-2xl bg-white/80 border border-water-blue/30 shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-water-blue/20 text-water-blue flex items-center justify-center text-lg font-bold mb-3">01</div>
+                        <h4 class="font-bold text-ink-dark">Seismology / Seismic</h4>
+                        <p class="text-xs text-ink-muted mt-1">震測與地震學、走時曲線、地下分層構造推論</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/80 border border-water-teal/30 shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-water-teal/20 text-water-teal flex items-center justify-center text-lg font-bold mb-3">02</div>
+                        <h4 class="font-bold text-ink-dark">Gravity Survey</h4>
+                        <p class="text-xs text-ink-muted mt-1">重力探勘、密度異常、地下高密度岩體推測</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/80 border border-water-lavender/30 shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-water-lavender/20 text-water-lavender flex items-center justify-center text-lg font-bold mb-3">03</div>
+                        <h4 class="font-bold text-ink-dark">Geothermal</h4>
+                        <p class="text-xs text-ink-muted mt-1">地熱流分析、地下熱源與岩漿活動研究</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/80 border border-water-sand/30 shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-water-sand/20 text-water-sand flex items-center justify-center text-lg font-bold mb-3">04</div>
+                        <h4 class="font-bold text-ink-dark">Electricity</h4>
+                        <p class="text-xs text-ink-muted mt-1">地電探勘、電阻率量測、地下水與斷層帶辨識</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/80 border border-water-coral/30 shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-water-coral/20 text-water-coral flex items-center justify-center text-lg font-bold mb-3">05</div>
+                        <h4 class="font-bold text-ink-dark">Magnetism</h4>
+                        <p class="text-xs text-ink-muted mt-1">地磁探勘、古地磁學、海底擴張與磁異常帶</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/80 border border-water-blue/30 shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-water-blue/20 text-water-blue flex items-center justify-center text-lg font-bold mb-3">06</div>
+                        <h4 class="font-bold text-ink-dark">Plate Tectonics</h4>
+                        <p class="text-xs text-ink-muted mt-1">板塊構造、全球地形與地震火山分布規律</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Digital Tech Tools Stack -->
+            <div class="space-y-4">
+                <h3 class="text-xl font-serif font-bold text-ink-dark flex items-center gap-2">
+                    <i class="fa-solid fa-laptop-code text-water-teal"></i> 數位工具與 AI 工作流 (Digital Tool Stack)
+                </h3>
+                <div class="grid md:grid-cols-5 gap-4">
+                    <div class="watercolor-card p-5 text-center space-y-2">
+                        <div class="text-3xl text-water-blue"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <div class="font-bold text-sm">PyGMT</div>
+                        <p class="text-xs text-ink-muted">繪製地形、地震分布、海溝與板塊邊界</p>
+                    </div>
+                    <div class="watercolor-card p-5 text-center space-y-2">
+                        <div class="text-3xl text-water-teal"><i class="fa-brands fa-python"></i></div>
+                        <div class="font-bold text-sm">Google Colab</div>
+                        <p class="text-xs text-ink-muted">Python 數據分析與科學實驗筆記本</p>
+                    </div>
+                    <div class="watercolor-card p-5 text-center space-y-2">
+                        <div class="text-3xl text-water-lavender"><i class="fa-solid fa-cube"></i></div>
+                        <div class="font-bold text-sm">3D Modeling</div>
+                        <p class="text-xs text-ink-muted">數位地形轉 STL，輸出可摸到的3D列印模型</p>
+                    </div>
+                    <div class="watercolor-card p-5 text-center space-y-2">
+                        <div class="text-3xl text-water-sand"><i class="fa-brands fa-github"></i></div>
+                        <div class="font-bold text-sm">GitHub Pages</div>
+                        <p class="text-xs text-ink-muted">建立個人與專題數位學習歷程網頁</p>
+                    </div>
+                    <div class="watercolor-card p-5 text-center space-y-2">
+                        <div class="text-3xl text-water-coral"><i class="fa-solid fa-robot"></i></div>
+                        <div class="font-bold text-sm">AI Agents</div>
+                        <p class="text-xs text-ink-muted">Gemini, Antigravity, OpenCode 智慧協同</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="clil" class="space-y-8">
+            <div class="text-center space-y-3">
+                <div class="inline-block px-3 py-1 rounded-full bg-water-blue/20 text-water-blue font-semibold text-xs tracking-wider uppercase">CLIL Science Language</div>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold">互動式 CLIL 雙語句型庫</h2>
+                <p class="text-ink-muted max-w-2xl mx-auto">掌握科學家表達觀點、描述數據與建立假說的常用句型</p>
+            </div>
+
+            <!-- Category Selector -->
+            <div class="flex justify-center gap-2 flex-wrap">
+                <button onclick="filterCLIL('all')" class="clil-filter-btn px-4 py-2 rounded-full bg-water-blue text-white text-xs font-bold">全部句型 All</button>
+                <button onclick="filterCLIL('level1')" class="clil-filter-btn px-4 py-2 rounded-full bg-white text-ink-muted text-xs font-bold hover:bg-water-blue/10">L1 描述現象</button>
+                <button onclick="filterCLIL('level2')" class="clil-filter-btn px-4 py-2 rounded-full bg-white text-ink-muted text-xs font-bold hover:bg-water-blue/10">L2 描述位置</button>
+                <button onclick="filterCLIL('level3')" class="clil-filter-btn px-4 py-2 rounded-full bg-white text-ink-muted text-xs font-bold hover:bg-water-blue/10">L3 比較分析</button>
+                <button onclick="filterCLIL('level4')" class="clil-filter-btn px-4 py-2 rounded-full bg-white text-ink-muted text-xs font-bold hover:bg-water-blue/10">L4 因果關係</button>
+                <button onclick="filterCLIL('level5')" class="clil-filter-btn px-4 py-2 rounded-full bg-white text-ink-muted text-xs font-bold hover:bg-water-blue/10">L5 科學證據</button>
+            </div>
+
+            <!-- Sentence Cards Container -->
+            <div id="clil-cards-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamic Content Loaded by JS -->
+            </div>
+
+            <!-- Interactive Sentence Builder -->
+            <div class="watercolor-card p-8 rounded-3xl space-y-6 bg-gradient-to-br from-white/90 to-water-teal/10">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-wand-magic-sparkles text-2xl text-water-teal"></i>
+                    <div>
+                        <h3 class="text-xl font-serif font-bold text-ink-dark">互動式科學句型組合器 (Interactive Sentence Builder)</h3>
+                        <p class="text-xs text-ink-muted">選擇組件，組裝屬於你的科學探究論述句：</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="text-xs font-bold text-ink-muted mb-1 block">1. 開頭 / 框架 (Frame)</label>
+                        <select id="builder-frame" onchange="buildSentence()" class="w-full p-3 rounded-xl bg-white border border-water-teal/30 text-sm font-medium">
+                            <option value="We observe that">We observe that (我們觀察到)</option>
+                            <option value="The data show that">The data show that (資料顯示)</option>
+                            <option value="One possible explanation is that">One possible explanation is that (可能解釋是)</option>
+                            <option value="The evidence supports the idea that">The evidence supports the idea that (證據支持)</option>
+                            <option value="If our hypothesis is correct, we expect">If our hypothesis is correct, we expect (若假說成立，預期)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-ink-muted mb-1 block">2. 主題主題 (Subject Topic)</label>
+                        <select id="builder-subject" onchange="buildSentence()" class="w-full p-3 rounded-xl bg-white border border-water-teal/30 text-sm font-medium">
+                            <option value="earthquakes around Taiwan">earthquakes around Taiwan (台灣周圍地震)</option>
+                            <option value="seismic velocity">seismic velocity (地震波速度)</option>
+                            <option value="high gravity anomalies">high gravity anomalies (高重力異常)</option>
+                            <option value="the Central Mountain Range">the Central Mountain Range (中央山脈)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-xs font-bold text-ink-muted mb-1 block">3. 關係/動詞 (Relationship/Action)</label>
+                        <select id="builder-action" onchange="buildSentence()" class="w-full p-3 rounded-xl bg-white border border-water-teal/30 text-sm font-medium">
+                            <option value="are concentrated along plate boundaries.">are concentrated along plate boundaries. (集中於板塊邊界)</option>
+                            <option value="increases with depth in the Earth's interior.">increases with depth. (隨深度增加)</option>
+                            <option value="are caused by underground density differences.">are caused by density differences. (由密度差造成)</option>
+                            <option value="reflects active plate collisions.">reflects active plate collisions. (反映板塊碰撞)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="p-5 bg-white rounded-2xl border-2 border-dashed border-water-teal/40 space-y-2">
+                    <div class="text-xs text-water-teal font-bold uppercase tracking-wider">生成的雙語科學句 (Generated Sentence):</div>
+                    <div id="built-english" class="text-lg font-serif font-bold text-water-blue">We observe that earthquakes around Taiwan are concentrated along plate boundaries.</div>
+                    <button onclick="copyBuiltSentence()" class="text-xs px-3 py-1.5 rounded-lg bg-water-teal/20 text-water-teal hover:bg-water-teal hover:text-white transition-all font-bold">
+                        <i class="fa-regular fa-copy mr-1"></i> 複製句型
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-rules" class="watercolor-card p-8 sm:p-12 relative overflow-hidden bg-gradient-to-r from-water-lavender/10 via-white to-water-coral/10">
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="flex items-center gap-3">
+                    <span class="w-3 h-8 rounded-full bg-water-lavender"></span>
+                    <h2 class="text-2xl sm:text-3xl font-serif font-bold text-ink-dark">AI 協同學習守則 AI Collaboration Guidelines</h2>
+                </div>
+
+                <!-- Golden Quote Box -->
+                <div class="p-6 rounded-2xl bg-white/90 border border-water-lavender/40 shadow-md text-center space-y-2">
+                    <i class="fa-solid fa-quote-left text-2xl text-water-lavender"></i>
+                    <p class="text-xl font-bold font-serif text-ink-dark">
+                        「AI 可以產生答案，但是理解答案是你的責任。」
+                    </p>
+                    <p class="text-sm text-ink-muted italic">
+                        "AI can generate an answer, but understanding the answer is your responsibility."
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-3 p-5 rounded-xl bg-white/70 border border-water-lavender/20">
+                        <h4 class="font-bold text-water-lavender flex items-center gap-2">
+                            <i class="fa-solid fa-circle-check"></i> 如何有效 Prompt AI
+                        </h4>
+                        <ul class="text-xs text-ink-muted space-y-2 list-disc list-inside">
+                            <li><span class="font-bold text-ink-dark">要求思考而非直接答案：</span>「請先提出三個可能的假說，不要直接給我最終答案。」</li>
+                            <li><span class="font-bold text-ink-dark">要求檢查推理邏輯：</span>「檢查我的 Reasoning，但請不要直接重寫我的回答。」</li>
+                            <li><span class="font-bold text-ink-dark">要求提示可驗證證據：</span>「有什麼觀測數據或圖表可以驗證這個解釋？」</li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-3 p-5 rounded-xl bg-white/70 border border-water-coral/20">
+                        <h4 class="font-bold text-water-coral flex items-center gap-2">
+                            <i class="fa-solid fa-book-bookmark"></i> AI 互動紀錄模板 (AI Log)
+                        </h4>
+                        <div class="text-xs font-mono bg-paper-bg p-3 rounded-lg border text-ink-muted space-y-1">
+                            <div># AI Interaction Log</div>
+                            <div>## 1. My Prompt (我問了什麼)</div>
+                            <div>## 2. AI Response (AI 建議)</div>
+                            <div>## 3. My Evaluation (合理性評估)</div>
+                            <div>## 4. Evidence Verification (證據驗證)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="exit-ticket" class="space-y-8">
+            <div class="text-center space-y-3">
+                <div class="inline-block px-3 py-1 rounded-full bg-water-coral/20 text-water-coral font-semibold text-xs tracking-wider uppercase">First Class Check-in</div>
+                <h2 class="text-3xl sm:text-4xl font-serif font-bold">第一堂課 Exit Ticket 互動簽到</h2>
+                <p class="text-ink-muted max-w-2xl mx-auto">完成今日三句反思，領取你的「地球物理探究者」初登場徽章</p>
+            </div>
+
+            <div class="watercolor-card p-8 rounded-3xl max-w-3xl mx-auto space-y-6">
+                <form id="exit-form" onsubmit="handleExitTicketSubmit(event)" class="space-y-6">
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-ink-dark flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-water-blue text-white flex items-center justify-center text-xs">1</span>
+                            Today I learned that geophysics is... (今天我學到地球物理是...)
+                        </label>
+                        <input type="text" id="exit-q1" required placeholder="例如：利用物理方法推論看不到的地下構造..." 
+                               class="w-full p-3.5 rounded-xl border border-water-blue/30 focus:border-water-blue focus:ring-2 focus:ring-water-blue/20 outline-none text-sm bg-white">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-ink-dark flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-water-teal text-white flex items-center justify-center text-xs">2</span>
+                            One digital tool I used or set up today was... (今天我設定或使用的一個數位工具是...)
+                        </label>
+                        <input type="text" id="exit-q2" required placeholder="例如：GitHub, Google Colab, Gemini..." 
+                               class="w-full p-3.5 rounded-xl border border-water-teal/30 focus:border-water-teal focus:ring-2 focus:ring-water-teal/20 outline-none text-sm bg-white">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-ink-dark flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-water-coral text-white flex items-center justify-center text-xs">3</span>
+                            One question I still have is... (我現在仍然有的一個問題或好奇是...)
+                        </label>
+                        <input type="text" id="exit-q3" required placeholder="例如：如何用 Python 畫出 3D 台灣地形？" 
+                               class="w-full p-3.5 rounded-xl border border-water-coral/30 focus:border-water-coral focus:ring-2 focus:ring-water-coral/20 outline-none text-sm bg-white">
+                    </div>
+
+                    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-water-blue via-water-teal to-water-lavender text-white font-bold shadow-md hover:shadow-lg transition-all text-base">
+                        提交 Exit Ticket 並生成完課徽章 ✨
+                    </button>
+                </form>
+
+                <!-- Completion Badge Result (Hidden by default) -->
+                <div id="badge-result" class="hidden text-center p-8 rounded-2xl bg-gradient-to-br from-paper-bg to-white border-2 border-water-teal/40 space-y-4">
+                    <div class="inline-block p-4 rounded-full bg-water-teal/20 text-water-teal text-4xl mb-2 animate-bounce">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3 class="text-2xl font-serif font-bold text-ink-dark">恭喜完成第一堂課導覽！</h3>
+                    <p class="text-xs text-ink-muted">Geophysics Course Explorer · Verified Badge</p>
+
+                    <div class="p-4 bg-white rounded-xl border border-water-lavender/30 text-left text-xs space-y-2">
+                        <div><strong class="text-water-blue">地球物理理解：</strong> <span id="display-q1"></span></div>
+                        <div><strong class="text-water-teal">數位工具：</strong> <span id="display-q2"></span></div>
+                        <div><strong class="text-water-coral">探究疑問：</strong> <span id="display-q3"></span></div>
+                    </div>
+
+                    <p class="text-xs font-bold text-water-lavender">
+                        "We use geophysics to study the Earth, English to access science, AI to support exploration, and our own thinking to understand the world."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 border-t border-water-lavender/20 bg-white/60 py-8 text-center text-xs text-ink-muted space-y-2">
+        <p>地球物理通論 General Geophysics · 雙語與AI協同探究課程網頁</p>
+        <p>Designed with Soft Watercolor Aesthetic | 授課教師：陳達毅 老師</p>
+    </footer>
+
+    <script>
+        // Schedule Data
+        const scheduleData = {
+            part1: {
+                title: "PART 1 (09:00–09:50) | 建立這門課的學習方式",
+                badge: "9:00 - 9:50 AM",
+                tasks: [
+                    { time: "09:00-09:10", title: "Task 1 教師自我介紹", desc: "認識陳達毅老師、了解課程非傳統授課，而是『提出問題 → 找資料 → 做出解釋 → 檢查證據 → 修改答案』的科學探究歷程。" },
+                    { time: "09:10-09:30", title: "Task 2 課程理念與內容", desc: "理解 Geo + Physics (用物理了解地球)。簡介震測、重力、地熱、地電、地磁與板塊構造；介紹 PyGMT 畫圖與 Google Colab。" },
+                    { time: "09:30-09:40", title: "Task 3 上課方式與評量", desc: "說明 Teacher Demonstrates → Practice → Investigate → Explain → Present 學習流程。成績占比：期中考40%、作業50%、平時10%。" },
+                    { time: "09:40-09:50", title: "Task 4 學生分組與 CLIL", desc: "2-3人分組，選出 Group Leader、Data/Coding、Documentation 角色，練習基礎小組對話英文。" }
+                ]
+            },
+            part2: {
+                title: "PART 2 (10:00–10:50) | 建立數位學習環境",
+                badge: "10:00 - 10:50 AM",
+                tasks: [
+                    { time: "10:00-10:25", title: "Task 5 AI Agent 工具介紹", desc: "區分 Chatbot 與 AI Agent (Goal → Plan → Use tools → Run code → Check results)。設定與安裝 Antigravity / OpenCode 環境。" },
+                    { time: "10:25-10:40", title: "Task 6 GitHub 帳號與歷程", desc: "理解 GitHub Repository 作為數位學習履歷 (Portfolio)。說明如何透過 GitHub Pages 將專題轉化為科學網頁。" },
+                    { time: "10:40-10:50", title: "GitHub 小任務實作", desc: "建立 GitHub 帳號，開立名為 'geophysics-2026' 的第一個專案庫並撰寫基礎 README.md。" }
+                ]
+            },
+            part3: {
+                title: "PART 3 (11:00–12:00) | 從「工具」回到「科學」",
+                badge: "11:00 - 12:00 PM",
+                tasks: [
+                    { time: "11:00-11:20", title: "Task 7 Google Colab 筆記本", desc: "建立 geophysics_week01.ipynb，練習 Python 計算波速走時 (t = d / v)，建立科學筆記本標準格式。" },
+                    { time: "11:20-11:40", title: "Task 8 地球物理是什麼？", desc: "理解 Inverse Problem (反演問題)：我們無法直接看見地球內部，因此透過觀察 (Observe) 與量測，進行推論 (Infer)。" },
+                    { time: "11:40-11:55", title: "Gemini + CER 實作示範", desc: "學習不要直接問 AI 答案，而是用 Prompt 讓 AI 成為假說產生者 (Hypothesis Generator) 並引導 CER 探究。" },
+                    { time: "11:55-12:00", title: "Exit Ticket 簽到與下週預告", desc: "完成三句課程反思；預告下週主題：PyGMT 繪製全球地形與板塊構造。" }
+                ]
+            }
+        };
+
+        // CER Simulator Steps Data
+        const cerSteps = [
+            {
+                step: 1,
+                title: "Claim (提出主張)",
+                type: "claim",
+                content: "「我認為台灣周圍的地震並非隨機分布，而是集中在特定的板塊邊界帶上。」",
+                english: "Our claim is that earthquakes around Taiwan are concentrated along specific plate boundaries.",
+                hint: "Claim 是你對科學問題提出的直接主張或解答。"
+            },
+            {
+                step: 2,
+                title: "Evidence (尋找證據)",
+                type: "evidence",
+                content: "「觀測全球與台灣地震分布圖 (PyGMT繪製)，發現地震點形成狹長的條帶狀，且東部地震深度隨往西延伸而變深。」",
+                english: "The data show that earthquakes form narrow belts, and earthquake depth increases westward.",
+                hint: "Evidence 是客觀的觀測數據、數據圖表或實驗現象。"
+            },
+            {
+                step: 3,
+                title: "Reasoning (建立推理)",
+                type: "reasoning",
+                content: "「因為菲律賓海板塊與歐亞板塊在此碰撞隱沒，岩石累積應力釋放產生地震，因此帶狀分布正是板塊邊界運動的直接物理反映。」",
+                english: "This evidence supports our claim because earthquakes occur where stress accumulates during plate collisions.",
+                hint: "Reasoning 利用物理學與地質學原理，將證據與主張邏輯性連結。"
+            }
+        ];
+
+        let currentCERIndex = 0;
+
+        // CLIL Sentence Bank Data
+        const clilSentences = [
+            { level: "level1", category: "L1 描述現象", en: "We observe that earthquakes are concentrated around Taiwan.", border: "border-water-blue", zh: "我們觀察到台灣周圍集中了許多地震。" },
+            { level: "level1", category: "L1 描述現象", en: "The map shows a deep trench east of Taiwan.", border: "border-water-blue", zh: "地圖顯示台灣東方有一條深海溝。" },
+            { level: "level2", category: "L2 描述位置", en: "Taiwan is located near an active subduction zone.", border: "border-water-teal", zh: "台灣位於活躍的隱沒帶附近。" },
+            { level: "level2", category: "L2 描述位置", en: "Earthquakes are distributed along plate boundaries.", border: "border-water-teal", zh: "地震沿著板塊邊界分布。" },
+            { level: "level3", category: "L3 比較分析", en: "Compared with continental crust, oceanic crust is thinner.", border: "border-water-lavender", zh: "與大陸地殼相比，海洋地殼較薄。" },
+            { level: "level3", category: "L3 比較分析", en: "The velocity of the lower layer is higher than that of the upper layer.", border: "border-water-lavender", zh: "下層的震波速度比上層高。" },
+            { level: "level4", category: "L4 因果關係", en: "Plate movement causes earthquakes along faults.", border: "border-water-sand", zh: "板塊運動造成斷層上的地震。" },
+            { level: "level4", category: "L4 因果關係", en: "Density differences cause gravity anomalies.", border: "border-water-sand", zh: "密度差異造成重力異常。" },
+            { level: "level5", category: "L5 科學證據", en: "The evidence shows that seismic velocity changes with depth.", border: "border-water-coral", zh: "證據顯示震波速度會隨深度改變。" },
+            { level: "level5", category: "L5 科學證據", en: "According to the data, travel time increases with distance.", border: "border-water-coral", zh: "根據資料，走時隨距離增加。" }
+        ];
+
+        function switchTab(key) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('bg-white', 'text-ink-muted');
+            });
+            const activeBtn = document.getElementById(`tab-${key}`);
+            activeBtn.classList.add('active');
+            activeBtn.classList.remove('bg-white', 'text-ink-muted');
+
+            const data = scheduleData[key];
+            let html = `
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center border-b border-water-lavender/20 pb-4">
+                        <h3 class="text-xl font-serif font-bold text-ink-dark">${data.title}</h3>
+                        <span class="px-3 py-1 rounded-full bg-water-blue/10 text-water-blue text-xs font-bold">${data.badge}</span>
+                    </div>
+                    <div class="space-y-4">
+            `;
+
+            data.tasks.forEach(t => {
+                html += `
+                    <div class="p-4 rounded-xl bg-white/80 border border-water-lavender/20 shadow-sm flex flex-col sm:flex-row gap-4 items-start">
+                        <span class="px-3 py-1 rounded-lg bg-paper-bg text-water-blue font-mono font-bold text-xs whitespace-nowrap border border-water-blue/20">${t.time}</span>
+                        <div class="space-y-1">
+                            <h4 class="font-bold text-sm text-ink-dark">${t.title}</h4>
+                            <p class="text-xs text-ink-muted leading-relaxed">${t.desc}</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `</div></div>`;
+            document.getElementById('tab-content-container').innerHTML = html;
+        }
+
+        function renderCERStep() {
+            const step = cerSteps[currentCERIndex];
+            document.getElementById('cer-step-indicator').innerText = `Step ${step.step} / 3`;
+
+            let colorClass = step.type === 'claim' ? 'text-water-coral' : step.type === 'evidence' ? 'text-water-teal' : 'text-water-blue';
+            let bgClass = step.type === 'claim' ? 'bg-water-coral/10' : step.type === 'evidence' ? 'bg-water-teal/10' : 'bg-water-blue/10';
+
+            const html = `
+                <div class="p-6 rounded-2xl ${bgClass} space-y-3 transition-all">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold px-3 py-1 rounded-full bg-white ${colorClass}">${step.title}</span>
+                    </div>
+                    <div class="text-base font-bold text-ink-dark font-serif">${step.content}</div>
+                    <div class="text-xs italic text-ink-muted font-sans">${step.english}</div>
+                    <div class="text-xs text-ink-muted border-t border-black/5 pt-2 mt-2">
+                        <i class="fa-solid fa-info-circle mr-1"></i> ${step.hint}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('cer-step-container').innerHTML = html;
+
+            document.getElementById('cer-prev-btn').disabled = currentCERIndex === 0;
+            document.getElementById('cer-next-btn').innerText = currentCERIndex === 2 ? '重新體驗' : '下一步';
+        }
+
+        function nextCERStep() {
+            if (currentCERIndex < 2) {
+                currentCERIndex++;
+            } else {
+                currentCERIndex = 0;
+            }
+            renderCERStep();
+        }
+
+        function prevCERStep() {
+            if (currentCERIndex > 0) {
+                currentCERIndex--;
+                renderCERStep();
+            }
+        }
+
+        function filterCLIL(category) {
+            const container = document.getElementById('clil-cards-grid');
+            let filtered = category === 'all' ? clilSentences : clilSentences.filter(s => s.level === category);
+
+            container.innerHTML = filtered.map(s => `
+                <div class="watercolor-card p-5 border-l-4 ${s.border} space-y-2">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-paper-bg text-ink-muted border">${s.category}</span>
+                    <p class="font-serif font-bold text-sm text-ink-dark">${s.en}</p>
+                    <p class="text-xs text-ink-muted">${s.zh}</p>
+                </div>
+            `).join('');
+        }
+
+        function buildSentence() {
+            const frame = document.getElementById('builder-frame').value;
+            const subject = document.getElementById('builder-subject').value;
+            const action = document.getElementById('builder-action').value;
+
+            document.getElementById('built-english').innerText = `${frame} ${subject} ${action}`;
+        }
+
+        function copyBuiltSentence() {
+            const text = document.getElementById('built-english').innerText;
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            alert('已成功複製句型至剪貼簿！');
+        }
+
+        function handleExitTicketSubmit(e) {
+            e.preventDefault();
+
+            const q1 = document.getElementById('exit-q1').value;
+            const q2 = document.getElementById('exit-q2').value;
+            const q3 = document.getElementById('exit-q3').value;
+
+            document.getElementById('display-q1').innerText = q1;
+            document.getElementById('display-q2').innerText = q2;
+            document.getElementById('display-q3').innerText = q3;
+
+            document.getElementById('exit-form').classList.add('hidden');
+            document.getElementById('badge-result').classList.remove('hidden');
+        }
+
+        // Initialize Page Interactions on Load
+        window.onload = function() {
+            switchTab('part1');
+            renderCERStep();
+            filterCLIL('all');
+            buildSentence();
+        }
+    </script>
+</body>
+</html>
